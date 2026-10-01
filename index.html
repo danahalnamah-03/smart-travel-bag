@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Travel Bag</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f4f7;
+      text-align: center;
+      margin: 0;
+      padding: 30px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 40px;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 18px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .card p {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>🎒 Smart Travel Bag</h1>
+    <p class="subtitle">Smart Bag Monitoring System</p>
+
+    <div class="card">
+      <h2>⚖️ Weight</h2>
+      <p>0.0 kg</p>
+    </div>
+
+    <div class="card">
+      <h2>📍 GPS Location</h2>
+      <p>Not connected</p>
+    </div>
+
+    <div class="card">
+      <h2>📱 Bluetooth</h2>
+      <p id="bluetooth">Disconnected</p>
+      <button onclick="connectBluetooth()">Connect Bluetooth</button>
+    </div>
+
+    <div class="card">
+      <h2>🌡️ Temperature</h2>
+      <p>-- °C</p>
+    </div>
+
+  </div>
+
+  <script>
+    function connectBluetooth() {
+      document.getElementById("bluetooth").innerText = "Connected ✅";
+    }
+  </script>
+
+</body>
+</html>
