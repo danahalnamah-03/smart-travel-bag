@@ -43,25 +43,71 @@
     }
 
     button {
-      padding: 10px 20px;
+      padding: 12px 20px;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
       font-size: 16px;
+      background: #222;
+      color: white;
+      margin-top: 10px;
+    }
+
+    .weight-card {
+      cursor: pointer;
+    }
+
+    .weight-card:hover {
+      transform: scale(1.01);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .back-button {
+      background: #777;
+      margin-bottom: 20px;
+    }
+
+    .warning {
+      background: #fff3cd;
+      padding: 15px;
+      border-radius: 12px;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    .bag-picture {
+      font-size: 80px;
+      margin: 20px 0;
+    }
+
+    .history {
+      text-align: left;
+      margin-top: 20px;
+    }
+
+    .history-item {
+      background: #f2f4f7;
+      padding: 12px;
+      border-radius: 10px;
+      margin: 8px 0;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+  <!-- MAIN PAGE -->
+  <div class="container" id="mainPage">
 
     <h1>🎒 Smart Travel Bag</h1>
     <p class="subtitle">Smart Bag Monitoring System</p>
 
-    <div class="card">
+    <div class="card weight-card" onclick="openWeightPage()">
       <h2>⚖️ Weight</h2>
-      <p>0.0 kg</p>
+      <p>Tap to view weight</p>
     </div>
 
     <div class="card">
@@ -82,10 +128,89 @@
 
   </div>
 
+
+  <!-- WEIGHT PAGE -->
+  <div class="container hidden" id="weightPage">
+
+    <button class="back-button" onclick="goBack()">← Back</button>
+
+    <h1>⚖️ Weight</h1>
+    <p class="subtitle">Smart Bag Weight Measurement</p>
+
+    <div class="card">
+
+      <h2>Current Weight</h2>
+
+      <p id="currentWeight">-- kg</p>
+
+      <button onclick="measureWeight()">
+        Measure Weight ⚖️
+      </button>
+
+      <div id="measurementArea" class="hidden">
+
+        <div class="warning" id="warningMessage">
+          ⚠️ الرجاء وضع الجنطة بالشكل الصحيح لقياس الوزن
+        </div>
+
+        <div class="bag-picture">
+          🧳
+        </div>
+
+        <p>ضع الجنطة بشكل مستقيم على الميزان</p>
+
+      </div>
+
+    </div>
+
+
+    <div class="card history">
+
+      <h2>📊 Previous Weights</h2>
+
+      <div id="weightHistory">
+
+        <div class="history-item">
+          No previous measurements
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
   <script>
-    function connectBluetooth() {
-      document.getElementById("bluetooth").innerText = "Connected ✅";
+
+    function openWeightPage() {
+      document.getElementById("mainPage").classList.add("hidden");
+      document.getElementById("weightPage").classList.remove("hidden");
     }
+
+
+    function goBack() {
+      document.getElementById("weightPage").classList.add("hidden");
+      document.getElementById("mainPage").classList.remove("hidden");
+    }
+
+
+    function measureWeight() {
+
+      const area = document.getElementById("measurementArea");
+
+      area.classList.remove("hidden");
+
+    }
+
+
+    function connectBluetooth() {
+
+      document.getElementById("bluetooth").innerText =
+        "Connected ✅";
+
+    }
+
   </script>
 
 </body>
