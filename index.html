@@ -1,456 +1,665 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Smart Travel Bag</title>
+  <title>Smart Travel Bag</title>
 
-<style>
+  <style>
 
-body {
-  font-family: Arial, sans-serif;
-  background: #f2f4f7;
-  text-align: center;
-  margin: 0;
-  padding: 30px;
-}
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f4f7;
+      text-align: center;
+      margin: 0;
+      padding: 30px;
+    }
 
-.container {
-  max-width: 600px;
-  margin: auto;
-}
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
 
-h1 {
-  font-size: 38px;
-  margin-bottom: 5px;
-}
+    h1 {
+      font-size: 38px;
+      margin-bottom: 5px;
+    }
 
-.subtitle {
-  color: #666;
-  margin-bottom: 30px;
-}
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+    }
 
-.card {
-  background: white;
-  padding: 22px;
-  margin: 15px 0;
-  border-radius: 18px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  cursor: pointer;
-  transition: 0.2s;
-}
+    .card {
+      background: white;
+      padding: 22px;
+      margin: 15px 0;
+      border-radius: 18px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: 0.2s;
+    }
 
-.card:hover {
-  transform: scale(1.02);
-}
+    .card:hover {
+      transform: scale(1.02);
+    }
 
-.card p {
-  font-size: 20px;
-  font-weight: bold;
-}
+    .card p {
+      font-size: 20px;
+      font-weight: bold;
+    }
 
-.hidden {
-  display: none;
-}
+    .hidden {
+      display: none;
+    }
 
-button {
-  padding: 12px 20px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 16px;
-  background: #222;
-  color: white;
-  margin-top: 10px;
-}
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      background: #222;
+      color: white;
+      margin-top: 10px;
+    }
 
-.back {
-  background: #777;
-  margin-bottom: 20px;
-}
+    .back {
+      background: #777;
+      margin-bottom: 20px;
+    }
 
-/* WEIGHT */
+    /* =========================
+       WEIGHT
+    ========================= */
 
-.warning {
-  background: #fff3cd;
-  padding: 15px;
-  border-radius: 12px;
-  margin-top: 20px;
-  font-weight: bold;
-}
+    .warning {
+      background: #fff3cd;
+      padding: 15px;
+      border-radius: 12px;
+      margin-top: 20px;
+      font-weight: bold;
+    }
 
-.bag {
-  font-size: 80px;
-  margin: 20px;
-  animation: moveBag 2s infinite;
-}
+    .weight-platform {
+      width: 210px;
+      height: 18px;
+      background: #777;
+      border-radius: 8px;
+      margin: 20px auto 0;
+    }
 
-@keyframes moveBag {
-  0% {
-    transform: translateY(-10px);
-  }
+    .bag-animation {
+      width: 200px;
+      height: 250px;
+      margin: 20px auto;
+      position: relative;
+      animation: suitcaseMove 2s ease-in-out infinite;
+    }
 
-  50% {
-    transform: translateY(10px);
-  }
+    /* Handle */
 
-  100% {
-    transform: translateY(-10px);
-  }
-}
+    .handle {
+      width: 45px;
+      height: 65px;
+      border: 7px solid #555;
+      border-bottom: none;
+      border-radius: 12px 12px 0 0;
+      position: absolute;
+      top: 0;
+      left: 78px;
+      box-sizing: border-box;
+    }
 
-.history {
-  text-align: left;
-}
+    /* Pink suitcase */
 
-.history-item {
-  background: #f2f4f7;
-  padding: 12px;
-  border-radius: 10px;
-  margin: 8px 0;
-}
+    .suitcase {
+      width: 135px;
+      height: 155px;
+      background: #f58ab5;
+      border: 4px solid #d95f91;
+      border-radius: 18px;
+      position: absolute;
+      bottom: 40px;
+      left: 33px;
+      box-sizing: border-box;
+    }
 
-/* MAP */
+    /* Suitcase middle line */
 
-.map {
-  height: 300px;
-  background: #dfe7ec;
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 60px;
-}
+    .suitcase::after {
+      content: "";
+      position: absolute;
+      width: 4px;
+      height: 100%;
+      background: #d95f91;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+    }
 
-/* TEMPERATURE */
+    /* Wheels */
 
-.temperature-normal {
-  font-size: 35px;
-}
+    .wheel {
+      width: 22px;
+      height: 22px;
+      background: #333;
+      border-radius: 50%;
+      position: absolute;
+      bottom: 18px;
+    }
 
-.alert {
-  background: #ffdddd;
-  color: #b00000;
-  padding: 15px;
-  border-radius: 12px;
-  font-weight: bold;
-  margin-top: 15px;
-}
+    .wheel-left {
+      left: 48px;
+    }
 
-</style>
+    .wheel-right {
+      right: 48px;
+    }
+
+    @keyframes suitcaseMove {
+
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+
+    }
+
+    /* =========================
+       HISTORY
+    ========================= */
+
+    .history {
+      text-align: left;
+    }
+
+    .history-item {
+      background: #f2f4f7;
+      padding: 12px;
+      border-radius: 10px;
+      margin: 8px 0;
+    }
+
+    /* =========================
+       GPS
+    ========================= */
+
+    .map {
+      height: 300px;
+      background: #dfe7ec;
+      border-radius: 15px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 60px;
+    }
+
+    /* =========================
+       TEMPERATURE
+    ========================= */
+
+    .temperature {
+      font-size: 35px;
+      font-weight: bold;
+    }
+
+    .alert {
+      background: #ffdddd;
+      color: #b00000;
+      padding: 15px;
+      border-radius: 12px;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+  </style>
 </head>
+
 
 <body>
 
-<!-- MAIN PAGE -->
+
+<!-- =========================
+     MAIN PAGE
+========================= -->
 
 <div class="container" id="mainPage">
 
-<h1>🎒 Smart Travel Bag</h1>
+  <h1>🎒 Smart Travel Bag</h1>
 
-<p class="subtitle">
-Smart Bag Monitoring System
-</p>
+  <p class="subtitle">
+    Smart Bag Monitoring System
+  </p>
 
 
-<!-- WEIGHT -->
+  <!-- WEIGHT -->
 
-<div class="card" onclick="openPage('weightPage')">
+  <div class="card" onclick="openPage('weightPage')">
 
-<h2>⚖️ Weight</h2>
+    <h2>⚖️ Weight</h2>
 
-<p id="mainWeight">
-0.0 kg
-</p>
+    <p id="mainWeight">
+      0.0 kg
+    </p>
+
+  </div>
+
+
+  <!-- GPS -->
+
+  <div class="card" onclick="openPage('gpsPage')">
+
+    <h2>📍 GPS Location</h2>
+
+    <p>
+      Tap to view location
+    </p>
+
+  </div>
+
+
+  <!-- BLUETOOTH -->
+
+  <div class="card" onclick="openPage('bluetoothPage')">
+
+    <h2>📱 Bluetooth</h2>
+
+    <p id="mainBluetooth">
+      Disconnected
+    </p>
+
+  </div>
+
+
+  <!-- TEMPERATURE -->
+
+  <div class="card" onclick="openPage('temperaturePage')">
+
+    <h2>🌡️ Temperature</h2>
+
+    <p id="mainTemperature">
+      -- °C
+    </p>
+
+  </div>
 
 </div>
 
 
-<!-- GPS -->
 
-<div class="card" onclick="openPage('gpsPage')">
-
-<h2>📍 GPS Location</h2>
-
-<p>
-Tap to view location
-</p>
-
-</div>
-
-
-<!-- BLUETOOTH -->
-
-<div class="card" onclick="openPage('bluetoothPage')">
-
-<h2>📱 Bluetooth</h2>
-
-<p id="mainBluetooth">
-Disconnected
-</p>
-
-</div>
-
-
-<!-- TEMPERATURE -->
-
-<div class="card" onclick="openPage('temperaturePage')">
-
-<h2>🌡️ Temperature</h2>
-
-<p id="mainTemperature">
--- °C
-</p>
-
-</div>
-
-</div>
-
-
-<!-- WEIGHT PAGE -->
+<!-- =========================
+     WEIGHT PAGE
+========================= -->
 
 <div class="container hidden" id="weightPage">
 
-<button class="back" onclick="goHome()">
-← Back
-</button>
+  <button class="back" onclick="goHome()">
+    ← Back
+  </button>
 
-<h1>⚖️ Weight</h1>
+  <h1>⚖️ Weight</h1>
 
-<div class="card">
+  <p class="subtitle">
+    Smart Bag Weight Measurement
+  </p>
 
-<h2>Current Weight</h2>
 
-<p id="currentWeight">
--- kg
-</p>
+  <div class="card">
 
-<button onclick="measureWeight(event)">
-Measure Weight ⚖️
-</button>
+    <h2>
+      Current Weight
+    </h2>
 
-<div id="weightInstructions" class="hidden">
+    <p id="currentWeight">
+      -- kg
+    </p>
 
-<div class="warning">
 
-Please place the suitcase like this to measure the weight.
+    <button onclick="measureWeight(event)">
+      Measure Weight ⚖️
+    </button>
+
+
+    <div id="weightInstructions" class="hidden">
+
+      <div class="warning">
+
+        Please place the suitcase like this to measure the weight.
+
+      </div>
+
+
+      <!-- ANIMATED PINK SUITCASE -->
+
+      <div class="bag-animation">
+
+        <div class="handle"></div>
+
+        <div class="suitcase"></div>
+
+        <div class="wheel wheel-left"></div>
+
+        <div class="wheel wheel-right"></div>
+
+      </div>
+
+
+      <div class="weight-platform"></div>
+
+
+      <p>
+        Place the suitcase straight on the weighing platform.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- PREVIOUS WEIGHTS -->
+
+  <div class="card history">
+
+    <h2>
+      📊 Previous Weights
+    </h2>
+
+    <div id="weightHistory">
+
+      <div class="history-item">
+        No previous measurements
+      </div>
+
+    </div>
+
+  </div>
 
 </div>
 
-<div class="bag">
-🧳
-</div>
-
-<p>
-Place the suitcase straight on the weighing platform.
-</p>
-
-</div>
-
-</div>
 
 
-<div class="card history">
-
-<h2>📊 Previous Weights</h2>
-
-<div id="weightHistory">
-
-<div class="history-item">
-No previous measurements
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- GPS PAGE -->
+<!-- =========================
+     GPS PAGE
+========================= -->
 
 <div class="container hidden" id="gpsPage">
 
-<button class="back" onclick="goHome()">
-← Back
-</button>
+  <button class="back" onclick="goHome()">
+    ← Back
+  </button>
 
-<h1>📍 GPS Location</h1>
+  <h1>
+    📍 GPS Location
+  </h1>
 
-<div class="card">
 
-<h2>Suitcase Location</h2>
+  <div class="card">
 
-<div class="map">
-🗺️
+    <h2>
+      Suitcase Location
+    </h2>
+
+
+    <div class="map">
+      🗺️
+    </div>
+
+
+    <p id="gpsStatus">
+      Waiting for GPS...
+    </p>
+
+  </div>
+
 </div>
 
-<p id="gpsStatus">
-Waiting for GPS...
-</p>
-
-</div>
-
-</div>
 
 
-<!-- BLUETOOTH PAGE -->
+<!-- =========================
+     BLUETOOTH PAGE
+========================= -->
 
 <div class="container hidden" id="bluetoothPage">
 
-<button class="back" onclick="goHome()">
-← Back
-</button>
+  <button class="back" onclick="goHome()">
+    ← Back
+  </button>
 
-<h1>📱 Bluetooth</h1>
 
-<div class="card">
+  <h1>
+    📱 Bluetooth
+  </h1>
 
-<h2>Connected Device</h2>
 
-<p>
-Device Name:
-</p>
+  <div class="card">
 
-<p id="deviceName">
-Smart Bag
-</p>
+    <h2>
+      Connected Device
+    </h2>
 
-<p id="bluetoothStatus">
-Disconnected ❌
-</p>
 
-<button onclick="connectBluetooth(event)">
-Connect Bluetooth
-</button>
+    <p>
+      Device Name:
+    </p>
+
+
+    <p id="deviceName">
+      Smart Bag
+    </p>
+
+
+    <p id="bluetoothStatus">
+      Disconnected ❌
+    </p>
+
+
+    <button onclick="connectBluetooth(event)">
+      Connect Bluetooth
+    </button>
+
+  </div>
 
 </div>
 
-</div>
 
 
-<!-- TEMPERATURE PAGE -->
+<!-- =========================
+     TEMPERATURE PAGE
+========================= -->
 
 <div class="container hidden" id="temperaturePage">
 
-<button class="back" onclick="goHome()">
-← Back
-</button>
+  <button class="back" onclick="goHome()">
+    ← Back
+  </button>
 
-<h1>🌡️ Temperature</h1>
 
-<div class="card">
+  <h1>
+    🌡️ Temperature
+  </h1>
 
-<h2>Current Temperature</h2>
 
-<p class="temperature-normal" id="temperature">
--- °C
-</p>
+  <div class="card">
 
-<h3>Recommended Temperature</h3>
+    <h2>
+      Current Temperature
+    </h2>
 
-<p>
-15°C – 30°C
-</p>
 
-<div id="temperatureAlert" class="hidden">
+    <p class="temperature" id="temperature">
+      -- °C
+    </p>
 
-<div class="alert">
 
-⚠️ Temperature Alert<br>
-The temperature is too high!
+    <h3>
+      Recommended Temperature
+    </h3>
+
+
+    <p>
+      15°C – 30°C
+    </p>
+
+
+    <div id="temperatureAlert" class="hidden">
+
+      <div class="alert">
+
+        ⚠️ Temperature Alert
+
+        <br>
+
+        The temperature is too high!
+
+      </div>
+
+    </div>
+
+  </div>
 
 </div>
 
-</div>
-
-</div>
-
-</div>
 
 
 <script>
 
+
+/* =========================
+   PAGE NAVIGATION
+========================= */
+
 function openPage(pageId) {
 
-document.getElementById("mainPage").classList.add("hidden");
+  document
+    .getElementById("mainPage")
+    .classList
+    .add("hidden");
 
-document.querySelectorAll(".container").forEach(function(page) {
 
-page.classList.add("hidden");
+  document
+    .querySelectorAll(".container")
+    .forEach(function(page) {
 
-});
+      page.classList.add("hidden");
 
-document.getElementById(pageId).classList.remove("hidden");
+    });
+
+
+  document
+    .getElementById(pageId)
+    .classList
+    .remove("hidden");
 
 }
+
 
 
 function goHome() {
 
-document.querySelectorAll(".container").forEach(function(page) {
+  document
+    .querySelectorAll(".container")
+    .forEach(function(page) {
 
-page.classList.add("hidden");
+      page.classList.add("hidden");
 
-});
+    });
 
-document.getElementById("mainPage").classList.remove("hidden");
+
+  document
+    .getElementById("mainPage")
+    .classList
+    .remove("hidden");
 
 }
 
 
-/* WEIGHT */
+
+/* =========================
+   WEIGHT
+========================= */
 
 function measureWeight(event) {
 
-event.stopPropagation();
+  event.stopPropagation();
 
-document
-.getElementById("weightInstructions")
-.classList.remove("hidden");
+
+  document
+    .getElementById("weightInstructions")
+    .classList
+    .remove("hidden");
 
 }
 
 
-/* BLUETOOTH */
+
+/* =========================
+   BLUETOOTH
+========================= */
 
 function connectBluetooth(event) {
 
-event.stopPropagation();
+  event.stopPropagation();
 
-document.getElementById("bluetoothStatus").innerText =
-"Connected ✅";
 
-document.getElementById("mainBluetooth").innerText =
-"Smart Bag Connected ✅";
+  document
+    .getElementById("bluetoothStatus")
+    .innerText =
+    "Connected ✅";
+
+
+  document
+    .getElementById("mainBluetooth")
+    .innerText =
+    "Smart Bag Connected ✅";
 
 }
 
 
-/* DEMO TEMPERATURE */
+
+/* =========================
+   DEMO TEMPERATURE
+========================= */
 
 function testTemperature() {
 
-let temperature = 35;
+  let temperature = 35;
 
-document.getElementById("temperature").innerText =
-temperature + " °C";
 
-document.getElementById("mainTemperature").innerText =
-temperature + " °C";
+  document
+    .getElementById("temperature")
+    .innerText =
+    temperature + " °C";
 
-if (temperature > 30) {
 
-document
-.getElementById("temperatureAlert")
-.classList.remove("hidden");
+  document
+    .getElementById("mainTemperature")
+    .innerText =
+    temperature + " °C";
+
+
+  if (temperature > 30) {
+
+    document
+      .getElementById("temperatureAlert")
+      .classList
+      .remove("hidden");
+
+  }
 
 }
 
-}
 
 </script>
 
+
 </body>
+
 </html>
