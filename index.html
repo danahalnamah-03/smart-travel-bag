@@ -7,6 +7,12 @@
 
   <title>Smart Travel Bag</title>
 
+  <!-- Map -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
   <style>
 
     body {
@@ -83,14 +89,6 @@
       font-weight: bold;
     }
 
-    .weight-platform {
-      width: 210px;
-      height: 18px;
-      background: #777;
-      border-radius: 8px;
-      margin: 20px auto 0;
-    }
-
     .bag-animation {
       width: 200px;
       height: 250px;
@@ -98,8 +96,6 @@
       position: relative;
       animation: suitcaseMove 2s ease-in-out infinite;
     }
-
-    /* Handle */
 
     .handle {
       width: 45px;
@@ -113,8 +109,6 @@
       box-sizing: border-box;
     }
 
-    /* Pink suitcase */
-
     .suitcase {
       width: 135px;
       height: 155px;
@@ -127,8 +121,6 @@
       box-sizing: border-box;
     }
 
-    /* Suitcase middle line */
-
     .suitcase::after {
       content: "";
       position: absolute;
@@ -139,8 +131,6 @@
       top: 0;
       transform: translateX(-50%);
     }
-
-    /* Wheels */
 
     .wheel {
       width: 22px;
@@ -157,6 +147,14 @@
 
     .wheel-right {
       right: 48px;
+    }
+
+    .weight-platform {
+      width: 210px;
+      height: 18px;
+      background: #777;
+      border-radius: 8px;
+      margin: 20px auto 0;
     }
 
     @keyframes suitcaseMove {
@@ -187,19 +185,33 @@
     }
 
     /* =========================
-       GPS
+       GPS MAP
     ========================= */
 
-    .map {
-      height: 300px;
-      background: #dfe7ec;
+    #map {
+      width: 100%;
+      height: 350px;
       border-radius: 15px;
+      margin-top: 15px;
+    }
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .gps-status {
+      font-size: 16px !important;
+      font-weight: normal !important;
+    }
 
-      font-size: 60px;
+    /* =========================
+       BLUETOOTH
+    ========================= */
+
+    .bluetooth-status {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .device-name {
+      font-size: 22px;
+      font-weight: bold;
     }
 
     /* =========================
@@ -209,6 +221,11 @@
     .temperature {
       font-size: 35px;
       font-weight: bold;
+    }
+
+    .recommended {
+      font-size: 18px !important;
+      font-weight: normal !important;
     }
 
     .alert {
@@ -255,11 +272,11 @@
 
   <!-- GPS -->
 
-  <div class="card" onclick="openPage('gpsPage')">
+  <div class="card" onclick="openGPS()">
 
     <h2>📍 GPS Location</h2>
 
-    <p>
+    <p id="mainGPS">
       Tap to view location
     </p>
 
@@ -268,12 +285,12 @@
 
   <!-- BLUETOOTH -->
 
-  <div class="card" onclick="openPage('bluetoothPage')">
+  <div class="card" onclick="connectBluetooth()">
 
     <h2>📱 Bluetooth</h2>
 
     <p id="mainBluetooth">
-      Disconnected
+      Disconnected ❌
     </p>
 
   </div>
@@ -331,13 +348,11 @@
     <div id="weightInstructions" class="hidden">
 
       <div class="warning">
-
-        Please place the suitcase like this to measure the weight.
-
+        Place the bag like this.
       </div>
 
 
-      <!-- ANIMATED PINK SUITCASE -->
+      <!-- Pink animated suitcase -->
 
       <div class="bag-animation">
 
@@ -353,11 +368,6 @@
 
 
       <div class="weight-platform"></div>
-
-
-      <p>
-        Place the suitcase straight on the weighing platform.
-      </p>
 
     </div>
 
@@ -404,17 +414,13 @@
   <div class="card">
 
     <h2>
-      Suitcase Location
+      Bag Location
     </h2>
 
+    <div id="map"></div>
 
-    <div class="map">
-      🗺️
-    </div>
-
-
-    <p id="gpsStatus">
-      Waiting for GPS...
+    <p class="gps-status" id="gpsStatus">
+      Getting location...
     </p>
 
   </div>
@@ -433,7 +439,6 @@
     ← Back
   </button>
 
-
   <h1>
     📱 Bluetooth
   </h1>
@@ -442,28 +447,20 @@
   <div class="card">
 
     <h2>
-      Connected Device
+      Device
     </h2>
-
 
     <p>
       Device Name:
     </p>
 
-
-    <p id="deviceName">
-      Smart Bag
+    <p class="device-name" id="deviceName">
+      Not connected
     </p>
 
-
-    <p id="bluetoothStatus">
+    <p class="bluetooth-status" id="bluetoothStatus">
       Disconnected ❌
     </p>
-
-
-    <button onclick="connectBluetooth(event)">
-      Connect Bluetooth
-    </button>
 
   </div>
 
@@ -504,7 +501,7 @@
     </h3>
 
 
-    <p>
+    <p class="recommended">
       15°C – 30°C
     </p>
 
@@ -529,6 +526,11 @@
 
 
 
+<!-- Leaflet Map -->
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+
 <script>
 
 
@@ -537,12 +539,6 @@
 ========================= */
 
 function openPage(pageId) {
-
-  document
-    .getElementById("mainPage")
-    .classList
-    .add("hidden");
-
 
   document
     .querySelectorAll(".container")
@@ -561,6 +557,10 @@ function openPage(pageId) {
 }
 
 
+
+/* =========================
+   HOME
+========================= */
 
 function goHome() {
 
@@ -601,24 +601,177 @@ function measureWeight(event) {
 
 
 /* =========================
+   GPS
+========================= */
+
+let map;
+let marker;
+
+
+function openGPS() {
+
+  openPage("gpsPage");
+
+
+  setTimeout(function() {
+
+    if (!map) {
+
+      map = L.map("map").setView(
+        [29.3759, 47.9774],
+        11
+      );
+
+
+      L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+          maxZoom: 19,
+          attribution: "&copy; OpenStreetMap contributors"
+        }
+      ).addTo(map);
+
+    }
+
+
+    map.invalidateSize();
+
+
+    if (navigator.geolocation) {
+
+      navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+          const lat =
+            position.coords.latitude;
+
+          const lng =
+            position.coords.longitude;
+
+
+          map.setView(
+            [lat, lng],
+            16
+          );
+
+
+          if (marker) {
+            marker.remove();
+          }
+
+
+          marker = L.marker(
+            [lat, lng]
+          ).addTo(map);
+
+
+          marker.bindPopup(
+            "🎒 Smart Bag Location"
+          ).openPopup();
+
+
+          document
+            .getElementById("gpsStatus")
+            .innerText =
+            "Location found 📍";
+
+
+          document
+            .getElementById("mainGPS")
+            .innerText =
+            "Location available 📍";
+
+        },
+
+        function() {
+
+          document
+            .getElementById("gpsStatus")
+            .innerText =
+            "Unable to get location.";
+
+        }
+
+      );
+
+    } else {
+
+      document
+        .getElementById("gpsStatus")
+        .innerText =
+        "GPS is not supported.";
+
+    }
+
+  }, 200);
+
+}
+
+
+
+/* =========================
    BLUETOOTH
 ========================= */
 
-function connectBluetooth(event) {
+async function connectBluetooth() {
 
-  event.stopPropagation();
+  if (!navigator.bluetooth) {
+
+    alert(
+      "Bluetooth is not supported in this browser."
+    );
+
+    return;
+
+  }
 
 
-  document
-    .getElementById("bluetoothStatus")
-    .innerText =
-    "Connected ✅";
+  openPage("bluetoothPage");
 
 
-  document
-    .getElementById("mainBluetooth")
-    .innerText =
-    "Smart Bag Connected ✅";
+  try {
+
+    document
+      .getElementById("bluetoothStatus")
+      .innerText =
+      "Searching... 🔎";
+
+
+    const device =
+      await navigator.bluetooth.requestDevice({
+
+        acceptAllDevices: true
+
+      });
+
+
+    document
+      .getElementById("deviceName")
+      .innerText =
+      device.name || "Smart Bag";
+
+
+    document
+      .getElementById("bluetoothStatus")
+      .innerText =
+      "Connected ✅";
+
+
+    document
+      .getElementById("mainBluetooth")
+      .innerText =
+      "Connected ✅";
+
+
+  } catch (error) {
+
+    document
+      .getElementById("bluetoothStatus")
+      .innerText =
+      "Disconnected ❌";
+
+  }
 
 }
 
@@ -628,10 +781,7 @@ function connectBluetooth(event) {
    DEMO TEMPERATURE
 ========================= */
 
-function testTemperature() {
-
-  let temperature = 35;
-
+function showTemperature(temperature) {
 
   document
     .getElementById("temperature")
@@ -651,6 +801,13 @@ function testTemperature() {
       .getElementById("temperatureAlert")
       .classList
       .remove("hidden");
+
+  } else {
+
+    document
+      .getElementById("temperatureAlert")
+      .classList
+      .add("hidden");
 
   }
 
