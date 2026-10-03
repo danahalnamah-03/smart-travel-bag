@@ -1,217 +1,456 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Travel Bag</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f2f4f7;
-      text-align: center;
-      margin: 0;
-      padding: 30px;
-    }
+<title>Smart Travel Bag</title>
 
-    .container {
-      max-width: 600px;
-      margin: auto;
-    }
+<style>
 
-    h1 {
-      font-size: 40px;
-      margin-bottom: 5px;
-    }
+body {
+  font-family: Arial, sans-serif;
+  background: #f2f4f7;
+  text-align: center;
+  margin: 0;
+  padding: 30px;
+}
 
-    .subtitle {
-      color: #666;
-      margin-bottom: 30px;
-    }
+.container {
+  max-width: 600px;
+  margin: auto;
+}
 
-    .card {
-      background: white;
-      padding: 20px;
-      margin: 15px 0;
-      border-radius: 18px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
+h1 {
+  font-size: 38px;
+  margin-bottom: 5px;
+}
 
-    .card p {
-      font-size: 22px;
-      font-weight: bold;
-    }
+.subtitle {
+  color: #666;
+  margin-bottom: 30px;
+}
 
-    button {
-      padding: 12px 20px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 16px;
-      background: #222;
-      color: white;
-      margin-top: 10px;
-    }
+.card {
+  background: white;
+  padding: 22px;
+  margin: 15px 0;
+  border-radius: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: 0.2s;
+}
 
-    .weight-card {
-      cursor: pointer;
-    }
+.card:hover {
+  transform: scale(1.02);
+}
 
-    .weight-card:hover {
-      transform: scale(1.01);
-    }
+.card p {
+  font-size: 20px;
+  font-weight: bold;
+}
 
-    .hidden {
-      display: none;
-    }
+.hidden {
+  display: none;
+}
 
-    .back-button {
-      background: #777;
-      margin-bottom: 20px;
-    }
+button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  background: #222;
+  color: white;
+  margin-top: 10px;
+}
 
-    .warning {
-      background: #fff3cd;
-      padding: 15px;
-      border-radius: 12px;
-      margin-top: 20px;
-      font-weight: bold;
-    }
+.back {
+  background: #777;
+  margin-bottom: 20px;
+}
 
-    .bag-picture {
-      font-size: 80px;
-      margin: 20px 0;
-    }
+/* WEIGHT */
 
-    .history {
-      text-align: left;
-      margin-top: 20px;
-    }
+.warning {
+  background: #fff3cd;
+  padding: 15px;
+  border-radius: 12px;
+  margin-top: 20px;
+  font-weight: bold;
+}
 
-    .history-item {
-      background: #f2f4f7;
-      padding: 12px;
-      border-radius: 10px;
-      margin: 8px 0;
-    }
-  </style>
+.bag {
+  font-size: 80px;
+  margin: 20px;
+  animation: moveBag 2s infinite;
+}
+
+@keyframes moveBag {
+  0% {
+    transform: translateY(-10px);
+  }
+
+  50% {
+    transform: translateY(10px);
+  }
+
+  100% {
+    transform: translateY(-10px);
+  }
+}
+
+.history {
+  text-align: left;
+}
+
+.history-item {
+  background: #f2f4f7;
+  padding: 12px;
+  border-radius: 10px;
+  margin: 8px 0;
+}
+
+/* MAP */
+
+.map {
+  height: 300px;
+  background: #dfe7ec;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+}
+
+/* TEMPERATURE */
+
+.temperature-normal {
+  font-size: 35px;
+}
+
+.alert {
+  background: #ffdddd;
+  color: #b00000;
+  padding: 15px;
+  border-radius: 12px;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+</style>
 </head>
 
 <body>
 
-  <!-- MAIN PAGE -->
-  <div class="container" id="mainPage">
+<!-- MAIN PAGE -->
 
-    <h1>🎒 Smart Travel Bag</h1>
-    <p class="subtitle">Smart Bag Monitoring System</p>
+<div class="container" id="mainPage">
 
-    <div class="card weight-card" onclick="openWeightPage()">
-      <h2>⚖️ Weight</h2>
-      <p>Tap to view weight</p>
-    </div>
+<h1>🎒 Smart Travel Bag</h1>
 
-    <div class="card">
-      <h2>📍 GPS Location</h2>
-      <p>Not connected</p>
-    </div>
-
-    <div class="card">
-      <h2>📱 Bluetooth</h2>
-      <p id="bluetooth">Disconnected</p>
-      <button onclick="connectBluetooth()">Connect Bluetooth</button>
-    </div>
-
-    <div class="card">
-      <h2>🌡️ Temperature</h2>
-      <p>-- °C</p>
-    </div>
-
-  </div>
+<p class="subtitle">
+Smart Bag Monitoring System
+</p>
 
 
-  <!-- WEIGHT PAGE -->
-  <div class="container hidden" id="weightPage">
+<!-- WEIGHT -->
 
-    <button class="back-button" onclick="goBack()">← Back</button>
+<div class="card" onclick="openPage('weightPage')">
 
-    <h1>⚖️ Weight</h1>
-    <p class="subtitle">Smart Bag Weight Measurement</p>
+<h2>⚖️ Weight</h2>
 
-    <div class="card">
+<p id="mainWeight">
+0.0 kg
+</p>
 
-      <h2>Current Weight</h2>
-
-      <p id="currentWeight">-- kg</p>
-
-      <button onclick="measureWeight()">
-        Measure Weight ⚖️
-      </button>
-
-      <div id="measurementArea" class="hidden">
-
-        <div class="warning" id="warningMessage">
-          ⚠️ الرجاء وضع الجنطة بالشكل الصحيح لقياس الوزن
-        </div>
-
-        <div class="bag-picture">
-          🧳
-        </div>
-
-        <p>ضع الجنطة بشكل مستقيم على الميزان</p>
-
-      </div>
-
-    </div>
+</div>
 
 
-    <div class="card history">
+<!-- GPS -->
 
-      <h2>📊 Previous Weights</h2>
+<div class="card" onclick="openPage('gpsPage')">
 
-      <div id="weightHistory">
+<h2>📍 GPS Location</h2>
 
-        <div class="history-item">
-          No previous measurements
-        </div>
+<p>
+Tap to view location
+</p>
 
-      </div>
-
-    </div>
-
-  </div>
+</div>
 
 
-  <script>
+<!-- BLUETOOTH -->
 
-    function openWeightPage() {
-      document.getElementById("mainPage").classList.add("hidden");
-      document.getElementById("weightPage").classList.remove("hidden");
-    }
+<div class="card" onclick="openPage('bluetoothPage')">
 
+<h2>📱 Bluetooth</h2>
 
-    function goBack() {
-      document.getElementById("weightPage").classList.add("hidden");
-      document.getElementById("mainPage").classList.remove("hidden");
-    }
+<p id="mainBluetooth">
+Disconnected
+</p>
 
-
-    function measureWeight() {
-
-      const area = document.getElementById("measurementArea");
-
-      area.classList.remove("hidden");
-
-    }
+</div>
 
 
-    function connectBluetooth() {
+<!-- TEMPERATURE -->
 
-      document.getElementById("bluetooth").innerText =
-        "Connected ✅";
+<div class="card" onclick="openPage('temperaturePage')">
 
-    }
+<h2>🌡️ Temperature</h2>
 
-  </script>
+<p id="mainTemperature">
+-- °C
+</p>
+
+</div>
+
+</div>
+
+
+<!-- WEIGHT PAGE -->
+
+<div class="container hidden" id="weightPage">
+
+<button class="back" onclick="goHome()">
+← Back
+</button>
+
+<h1>⚖️ Weight</h1>
+
+<div class="card">
+
+<h2>Current Weight</h2>
+
+<p id="currentWeight">
+-- kg
+</p>
+
+<button onclick="measureWeight(event)">
+Measure Weight ⚖️
+</button>
+
+<div id="weightInstructions" class="hidden">
+
+<div class="warning">
+
+Please place the suitcase like this to measure the weight.
+
+</div>
+
+<div class="bag">
+🧳
+</div>
+
+<p>
+Place the suitcase straight on the weighing platform.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card history">
+
+<h2>📊 Previous Weights</h2>
+
+<div id="weightHistory">
+
+<div class="history-item">
+No previous measurements
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- GPS PAGE -->
+
+<div class="container hidden" id="gpsPage">
+
+<button class="back" onclick="goHome()">
+← Back
+</button>
+
+<h1>📍 GPS Location</h1>
+
+<div class="card">
+
+<h2>Suitcase Location</h2>
+
+<div class="map">
+🗺️
+</div>
+
+<p id="gpsStatus">
+Waiting for GPS...
+</p>
+
+</div>
+
+</div>
+
+
+<!-- BLUETOOTH PAGE -->
+
+<div class="container hidden" id="bluetoothPage">
+
+<button class="back" onclick="goHome()">
+← Back
+</button>
+
+<h1>📱 Bluetooth</h1>
+
+<div class="card">
+
+<h2>Connected Device</h2>
+
+<p>
+Device Name:
+</p>
+
+<p id="deviceName">
+Smart Bag
+</p>
+
+<p id="bluetoothStatus">
+Disconnected ❌
+</p>
+
+<button onclick="connectBluetooth(event)">
+Connect Bluetooth
+</button>
+
+</div>
+
+</div>
+
+
+<!-- TEMPERATURE PAGE -->
+
+<div class="container hidden" id="temperaturePage">
+
+<button class="back" onclick="goHome()">
+← Back
+</button>
+
+<h1>🌡️ Temperature</h1>
+
+<div class="card">
+
+<h2>Current Temperature</h2>
+
+<p class="temperature-normal" id="temperature">
+-- °C
+</p>
+
+<h3>Recommended Temperature</h3>
+
+<p>
+15°C – 30°C
+</p>
+
+<div id="temperatureAlert" class="hidden">
+
+<div class="alert">
+
+⚠️ Temperature Alert<br>
+The temperature is too high!
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+function openPage(pageId) {
+
+document.getElementById("mainPage").classList.add("hidden");
+
+document.querySelectorAll(".container").forEach(function(page) {
+
+page.classList.add("hidden");
+
+});
+
+document.getElementById(pageId).classList.remove("hidden");
+
+}
+
+
+function goHome() {
+
+document.querySelectorAll(".container").forEach(function(page) {
+
+page.classList.add("hidden");
+
+});
+
+document.getElementById("mainPage").classList.remove("hidden");
+
+}
+
+
+/* WEIGHT */
+
+function measureWeight(event) {
+
+event.stopPropagation();
+
+document
+.getElementById("weightInstructions")
+.classList.remove("hidden");
+
+}
+
+
+/* BLUETOOTH */
+
+function connectBluetooth(event) {
+
+event.stopPropagation();
+
+document.getElementById("bluetoothStatus").innerText =
+"Connected ✅";
+
+document.getElementById("mainBluetooth").innerText =
+"Smart Bag Connected ✅";
+
+}
+
+
+/* DEMO TEMPERATURE */
+
+function testTemperature() {
+
+let temperature = 35;
+
+document.getElementById("temperature").innerText =
+temperature + " °C";
+
+document.getElementById("mainTemperature").innerText =
+temperature + " °C";
+
+if (temperature > 30) {
+
+document
+.getElementById("temperatureAlert")
+.classList.remove("hidden");
+
+}
+
+}
+
+</script>
 
 </body>
 </html>
